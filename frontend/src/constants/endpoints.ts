@@ -6,4 +6,8 @@ export const ENDPOINTS = {
   TASKS: `${API_BASE_URL}/tasks`,
   USERS: `${API_BASE_URL}/users`,
   PROTECTED: `${API_BASE_URL}/protected`,
+  UPLOAD:`${API_BASE_URL}/upload`,
+  ROLES: `${API_BASE_URL}/roles`,
+  PERMISSIONS: `${API_BASE_URL}/roles/permissions`,
+
 };

@@ -1,7 +1,11 @@
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { MdDashboard, MdPerson, MdLogout } from 'react-icons/md'; 
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -10,40 +14,65 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar sx={{ width: '100vw' }}>
-      <Toolbar disableGutters>
-        <Box ml={5} mr={5} sx={{width:'90vw',display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-          <Box>
-          <Typography
-            variant="h6"
-            noWrap
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'flex', md: 'flex' },
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              textDecoration: 'none',
-            }}
-          >
+    <Box sx={{ display: 'flex' }}>
+    {/* Icon to open the Drawer */}
+    <IconButton
+     color='primary'
+      aria-label="open drawer"
+      onClick={() => setOpen(true)}
+      edge="start"
+      sx={{ ml: 2, mt: 2,}}
+    >
+      <MenuIcon style={{fontSize:'2rem'}}/>
+    </IconButton>
+
+    {/* Sidebar Drawer */}
+    <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+      <Box
+        sx={{
+          width: 250,
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        
+
+        }}
+        role="presentation"
+        onClick={() => setOpen(false)}
+        onKeyDown={() => setOpen(false)}
+      >
+        <Toolbar>
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
             Task Manager
           </Typography>
-          </Box>
-          <Box>
-          <Button
-            color="inherit"
-            onClick={() => navigate('/dashboard')}
-            sx={{ mx: 1 }}
-          >
-            Dashboard
-          </Button>
-          <Button color="inherit" onClick={handleLogout}>
-            Logout
-          </Button>
-          </Box>
-          </Box>
         </Toolbar>
-        
-    </AppBar>
+
+        {/* Sidebar Links */}
+        <List>
+          <ListItem button onClick={() => navigate('/dashboard')}>
+            <ListItemIcon>
+              <MdDashboard size={24} />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+
+          <ListItem button onClick={() => navigate('/users')}>
+            <ListItemIcon>
+              <MdPerson size={24} />
+            </ListItemIcon>
+            <ListItemText primary="Users" />
+          </ListItem>
+
+          <ListItem button onClick={handleLogout}>
+            <ListItemIcon>
+              <MdLogout size={24} />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </List>
+      </Box>
+    </Drawer>
+  </Box>
   );
 };
 
