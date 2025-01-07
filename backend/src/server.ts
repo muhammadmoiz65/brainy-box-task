@@ -75,11 +75,11 @@ class Server {
     this.app.post('/register', this.wrapAsync(AuthController.register));
     this.app.post('/login', this.wrapAsync(login));
 
-    this.app.post('/tasks', authenticateToken, authorizeRole('Admin'), this.wrapAsync(this.createTask));
-    this.app.get('/tasks', authenticateToken, this.wrapAsync(this.getAllTasks));
-    this.app.get('/tasks/:id', authenticateToken, this.wrapAsync(this.getTaskById));
-    this.app.put('/tasks/:id', authenticateToken, authorizeRole('Admin'), this.wrapAsync(this.updateTask));
-    this.app.delete('/tasks/:id', authenticateToken, authorizeRole('Admin'), this.wrapAsync(this.deleteTask));
+    this.app.post('/tasks'        , authenticateToken, authorizeRole('Admin'), this.wrapAsync(this.createTask));
+    this.app.get('/tasks'         , authenticateToken, this.wrapAsync(this.getAllTasks));
+    this.app.get('/tasks/:id'     , authenticateToken, this.wrapAsync(this.getTaskById));
+    this.app.put('/tasks/:id'     , authenticateToken, authorizeRole('Admin'), this.wrapAsync(this.updateTask));
+    this.app.delete('/tasks/:id'  , authenticateToken, authorizeRole('Admin'), this.wrapAsync(this.deleteTask));
   }
 
   private createTask = async (req: Request, res: Response) => {
