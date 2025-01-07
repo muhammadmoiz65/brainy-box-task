@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+const JWT_SECRET =  'secret';
 
 class AuthController {
   static register = async (req: Request, res: Response) => {
@@ -54,7 +54,7 @@ export const login = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { id: user.id, role: user.role },
-      process.env.JWT_SECRET!,
+      'secret',
       { expiresIn: '1h' }
     );
 

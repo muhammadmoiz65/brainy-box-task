@@ -21,6 +21,7 @@ const TaskList = ({ refresh }: { refresh: boolean }) => {
   }));
 
   useEffect(() => {
+    // getUser();
     const fetchTasksAndUsers = async () => {
       try {
         const [tasksRes, usersRes] = await Promise.all([
@@ -38,6 +39,7 @@ const TaskList = ({ refresh }: { refresh: boolean }) => {
     fetchTasksAndUsers();
 
     socket.on('taskCreated', (newTask) => {
+      getUser();
       setTasks((prev) => [...prev, newTask]);
     });
 
@@ -51,12 +53,36 @@ const TaskList = ({ refresh }: { refresh: boolean }) => {
       setTasks((prev) => prev.filter((task) => task.id != id));
     });
 
+
+  
+
     return () => {
       socket.off('taskCreated');
       socket.off('taskUpdated');
       socket.off('taskDeleted');
     };
   }, [refresh]);
+
+
+
+const getUser = () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return;
+  }
+
+  try {
+    // const decoded = jwtDecode(token);
+    // console.log("Decoded token: ", JSON.stringify(decoded));
+    // return decoded; // Return the decoded token if needed
+  } catch (err) {
+    console.error("Invalid token", err);
+    return;
+  }
+};
+    
+  
+
 
   const handleDelete = async (id: number) => {
     try {

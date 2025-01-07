@@ -14,7 +14,7 @@ export const checkPermission = (requiredPermission: { resource: string; action: 
       }
 
       const token = authHeader.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as CustomJwtPayload;
+      const decoded = jwt.verify(token, 'secret') as CustomJwtPayload;
 
       const roleId = decoded.role;
       
